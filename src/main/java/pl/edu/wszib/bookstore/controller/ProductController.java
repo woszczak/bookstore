@@ -11,6 +11,7 @@ import pl.edu.wszib.bookstore.model.Product;
 import pl.edu.wszib.bookstore.service.ProductService;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
@@ -38,6 +39,12 @@ public class ProductController {
         }
     }
 
+
+    @GetMapping("/{category}")
+            public List<Product> getProductsByCategory(@PathVariable("category") String categoryName){
+        Category category = Category.valueOf(categoryName.toUpperCase());
+        return productService.getProductsByCategory(category);
+    }
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)

@@ -2,9 +2,12 @@ package pl.edu.wszib.bookstore.service.serviceImpl;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import pl.edu.wszib.bookstore.model.Category;
 import pl.edu.wszib.bookstore.model.Product;
 import pl.edu.wszib.bookstore.repository.ProductRepository;
 import pl.edu.wszib.bookstore.service.ProductService;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -39,6 +42,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void delete(long id) {
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(Category category) {
+        return productRepository.findByCategory(category);
     }
 }
 
