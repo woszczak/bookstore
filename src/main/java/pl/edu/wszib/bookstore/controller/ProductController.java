@@ -53,6 +53,32 @@ public class ProductController {
     }
 
 
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Product> editProduct(@PathVariable("id") Long id,
+                                               @RequestParam("name") String name,
+                                               @RequestParam("price") Double price,
+                                               @RequestParam("category") Category category,
+                                               @RequestParam("bestseller") Boolean bestseller,
+                                               @RequestParam(value = "picture", required = false) MultipartFile picture) throws IOException{
+        Product product = productService.getProduct(id);
+        if (product == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        product.setName(name);
+        product.setPrice(price);
+        product.setCategory(category);
+        product.setBestseller(bestseller);
+
+        if(picture != null && !picture.isEmpty()){
+            product.setPicture(picture.getBytes());
+        }
+
+        Product updatedProduct = productService.save(product);
+        return ResponseEntity.ok(updatedProduct);
+    }
+
+
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public Product addProduct(@RequestParam("name") String name,
