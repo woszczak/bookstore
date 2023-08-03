@@ -1,7 +1,6 @@
 package pl.edu.wszib.bookstore.service.serviceImpl;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.wszib.bookstore.model.Product;
 import pl.edu.wszib.bookstore.repository.ProductRepository;
@@ -29,6 +28,9 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id).orElse(null);
     }
 
+
+
+
     @Override
     public Product save(Product product) {
         return productRepository.save(product);
@@ -39,3 +41,4 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(id);
     }
 }
+

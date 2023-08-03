@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.edu.wszib.bookstore.model.Category;
 import pl.edu.wszib.bookstore.model.Product;
 import pl.edu.wszib.bookstore.service.ProductService;
 
@@ -22,7 +23,7 @@ public class ProductController {
     }
 
     @GetMapping(value = {""})
-    public @NotNull Iterable<Product> getProducts(){
+    public @NotNull Iterable<Product> getProducts() {
         return productService.getAllProducts();
     }
 
@@ -38,15 +39,17 @@ public class ProductController {
     }
 
 
-
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public Product addProduct(@RequestParam("name") String name,
                               @RequestParam("price") Double price,
+                              @RequestParam("category") Category category,
                               @RequestParam(value = "picture", required = false) MultipartFile picture) throws IOException {
         Product product = new Product();
         product.setName(name);
         product.setPrice(price);
+        product.setCategory(category);
+
         if (picture != null && !picture.isEmpty()) {
             product.setPicture(picture.getBytes());
         }

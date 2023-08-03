@@ -24,6 +24,18 @@ public class Product {
     private Double price;
 
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category")
+    private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Column(name = "picture")
     @Lob
     private byte[] picture;
