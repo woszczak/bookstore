@@ -1,9 +1,7 @@
 package pl.edu.wszib.bookstore.dto;
 
 
-import jdk.jfr.Category;
-
-import java.util.Calendar;
+import pl.edu.wszib.bookstore.model.Category;
 
 public class ProductDTO {
     private Long id;
@@ -15,12 +13,23 @@ public class ProductDTO {
 
     private byte[] picture;
 
-    public ProductDTO(Long id, String name, Double price, Category category, byte[] picture) {
+    private boolean bestseller;
+
+    public ProductDTO(Long id, String name, Double price, Category category, byte[] picture, boolean bestseller) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
         this.picture = picture;
+        this.bestseller = bestseller;
+    }
+
+    public boolean isBestseller() {
+        return bestseller;
+    }
+
+    public void setBestseller(boolean bestseller) {
+        this.bestseller = bestseller;
     }
 
     public Category getCategory() {

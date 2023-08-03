@@ -28,6 +28,17 @@ public class Product {
     @Column(name = "category")
     private Category category;
 
+    @Column(name = "bestseller")
+    private Boolean bestseller = false;
+
+    public Boolean isBestseller() {
+        return bestseller;
+    }
+
+    public void setBestseller(Boolean bestseller) {
+        this.bestseller = bestseller;
+    }
+
     public Category getCategory() {
         return category;
     }

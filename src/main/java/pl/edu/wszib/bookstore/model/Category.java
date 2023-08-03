@@ -8,7 +8,6 @@ public enum Category {
     FANTASY,
     BIOGRAPHY,
     HISTORY,
-    THRILLER,
-    BESTSELLER
+    THRILLER
 
 }

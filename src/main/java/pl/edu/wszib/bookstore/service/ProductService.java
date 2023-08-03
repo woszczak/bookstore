@@ -12,6 +12,7 @@ public interface ProductService {
     Product save(Product product);
     void delete(long id);
     List<Product> getProductsByCategory(Category category);
+    List<Product> getBestsellers();
 
 
 }

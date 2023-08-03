@@ -48,5 +48,10 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProductsByCategory(Category category) {
         return productRepository.findByCategory(category);
     }
+
+    @Override
+    public List<Product> getBestsellers() {
+        return productRepository.findByBestseller(true);
+    }
 }
 

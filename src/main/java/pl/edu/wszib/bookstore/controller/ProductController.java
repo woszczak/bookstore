@@ -41,21 +41,30 @@ public class ProductController {
 
 
     @GetMapping("/{category}")
-            public List<Product> getProductsByCategory(@PathVariable("category") String categoryName){
+    public List<Product> getProductsByCategory(@PathVariable("category") String categoryName) {
         Category category = Category.valueOf(categoryName.toUpperCase());
         return productService.getProductsByCategory(category);
     }
+
+
+    @GetMapping("/bestsellers")
+    public List<Product> getBestsellers() {
+        return productService.getBestsellers();
+    }
+
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public Product addProduct(@RequestParam("name") String name,
                               @RequestParam("price") Double price,
                               @RequestParam("category") Category category,
+                              @RequestParam("bestseller") Boolean bestseller,
                               @RequestParam(value = "picture", required = false) MultipartFile picture) throws IOException {
         Product product = new Product();
         product.setName(name);
         product.setPrice(price);
         product.setCategory(category);
+        product.setBestseller(bestseller);
 
         if (picture != null && !picture.isEmpty()) {
             product.setPicture(picture.getBytes());
