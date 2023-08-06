@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public Iterable<Product> getAllProducts() {
+    public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
@@ -30,8 +30,6 @@ public class ProductServiceImpl implements ProductService {
     public Product getProduct(long id) {
         return productRepository.findById(id).orElse(null);
     }
-
-
 
 
     @Override
@@ -53,4 +51,5 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getBestsellers() {
         return productRepository.findByBestseller(true);
     }
+    
 }

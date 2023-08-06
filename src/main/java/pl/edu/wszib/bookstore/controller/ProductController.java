@@ -1,7 +1,6 @@
 package pl.edu.wszib.bookstore.controller;
 
 
-import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +27,9 @@ public class ProductController {
     }
 
     @GetMapping(value = {""})
-    public @NotNull Iterable<Product> getProducts() {
-        return productService.getAllProducts();
+    public List<ProductDTO> getProducts() {
+        List<Product> products = productService.getAllProducts();
+        return productMapper.toDTOList(products);
     }
 
 
@@ -47,15 +47,18 @@ public class ProductController {
 
 
     @GetMapping("/category/{category}")
-    public List<Product> getProductsByCategory(@PathVariable("category") String categoryName) {
+    public List<ProductDTO> getProductsByCategory(@PathVariable("category") String categoryName) {
         Category category = Category.valueOf(categoryName.toUpperCase());
-        return productService.getProductsByCategory(category);
+
+        List<Product> products = productService.getProductsByCategory(category);
+        return productMapper.toDTOList(products);
     }
 
 
     @GetMapping("/bestsellers")
-    public List<Product> getBestsellers() {
-        return productService.getBestsellers();
+    public List<ProductDTO> getBestsellers() {
+        List<Product> bestsellers = productService.getBestsellers();
+        return productMapper.toDTOList(bestsellers);
     }
 
 
@@ -87,5 +90,33 @@ public class ProductController {
     public void deleteProduct(@PathVariable("id") Long productId) {
         productService.delete(productId);
     }
+
+@PutMapping("edit/{id}")
+    public ResponseEntity<ProductDTO> editProduct (@PathVariable("id") Long id,
+                                                   @RequestParam("name") String name,
+                                                   @RequestParam("price") Double price,
+                                                   @RequestParam("category") Category category,
+                                                   @RequestParam("bestseller") Boolean bestseller,
+                                                   @RequestParam(value = "picture", required = false) MultipartFile picture
+                                                   ) throws IOException{
+        Product product = productService.getProduct(id);
+        if (product == null){
+            return ResponseEntity.notFound().build();
+        }
+        product.setName(name);
+        product.setPrice(price);
+        product.setCategory(category);
+        product.setBestseller(bestseller);
+
+        if (picture != null && !picture.isEmpty()){
+            product.setPicture(picture.getBytes());
+        }
+
+        Product updatedProduct = productService.save(product);
+        ProductDTO updatedProductDTO = productMapper.toDTO(updatedProduct);
+        return ResponseEntity.ok(updatedProductDTO);
+
+}
+
 
 }

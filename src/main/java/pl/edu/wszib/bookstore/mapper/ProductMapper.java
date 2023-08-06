@@ -6,6 +6,8 @@ import org.mapstruct.factory.Mappers;
 import pl.edu.wszib.bookstore.dto.ProductDTO;
 import pl.edu.wszib.bookstore.model.Product;
 
+import java.util.List;
+
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
@@ -17,4 +19,6 @@ public interface ProductMapper {
     @Mapping(target = "bestseller", constant = "false")
     Product fromDTO(ProductDTO productDTO);
 
+
+    List<ProductDTO> toDTOList(List<Product> products);
 }
