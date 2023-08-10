@@ -16,9 +16,10 @@ public interface ProductMapper {
     ProductDTO toDTO(Product product);
 
     @Mapping(source = "id", target = "id")
+    @Mapping(source = "price", target = "price")
+    @Mapping(source = "quantity", target = "quantity")
     @Mapping(target = "bestseller", constant = "false")
-    Product fromDTO(ProductDTO productDTO);
-
+    Product toDB(ProductDTO productDTO);
 
     List<ProductDTO> toDTOList(List<Product> products);
 }

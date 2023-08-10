@@ -1,41 +1,27 @@
-package pl.edu.wszib.bookstore.model;
+package pl.edu.wszib.bookstore.dto;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import pl.edu.wszib.bookstore.model.Cart;
+import pl.edu.wszib.bookstore.model.Product;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "cart_item")
-public class CartItem {
+public class CartItemDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
-
-    @Column(nullable = false)
-    private int quantity;
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    private Integer quantity;
     private Cart cart;
-
-    @CreationTimestamp
     private Date createDate;
-
-    @UpdateTimestamp
     private Date updateDate;
+
+    public CartItemDTO(Long id, Product product, Integer quantity, Cart cart, Date createDate, Date updateDate) {
+        this.id = id;
+        this.product = product;
+        this.quantity = quantity;
+        this.cart = cart;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+    }
 
     public Long getId() {
         return id;
@@ -53,11 +39,11 @@ public class CartItem {
         this.product = product;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

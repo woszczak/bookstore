@@ -3,25 +3,29 @@ package pl.edu.wszib.bookstore.dto;
 
 import pl.edu.wszib.bookstore.model.Category;
 
+import java.math.BigDecimal;
+
 public class ProductDTO {
     private Long id;
 
     private String name;
 
-    private Double price;
+    private BigDecimal price;
     private Category category;
 
     private byte[] picture;
 
     private boolean bestseller;
+    private Integer quantity;
 
-    public ProductDTO(Long id, String name, Double price, Category category, byte[] picture, boolean bestseller) {
+    public ProductDTO(Long id, String name, BigDecimal price, Category category, byte[] picture, boolean bestseller, Integer quantity) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
         this.picture = picture;
         this.bestseller = bestseller;
+        this.quantity = quantity;
     }
 
     public boolean isBestseller() {
@@ -64,13 +68,19 @@ public class ProductDTO {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
+    public Integer getQuantity() {
+        return quantity;
+    }
 
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 }

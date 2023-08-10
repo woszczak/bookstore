@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.lang.NonNull;
 
+import java.math.BigDecimal;
+
 
 @Entity
 @Table(name = "products")
@@ -21,7 +23,7 @@ public class Product {
     private String name;
 
     @Column(name = "price")
-    private Double price;
+    private BigDecimal price;
 
 
     @Enumerated(EnumType.STRING)
@@ -30,6 +32,14 @@ public class Product {
 
     @Column(name = "bestseller")
     private Boolean bestseller = false;
+
+    @NotNull
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @Column(name = "picture")
+    @Lob
+    private byte[] picture;
 
     public Boolean isBestseller() {
         return bestseller;
@@ -47,9 +57,7 @@ public class Product {
         this.category = category;
     }
 
-    @Column(name = "picture")
-    @Lob
-    private byte[] picture;
+
 
     public byte[] getPicture() {
         return picture;
@@ -79,11 +87,23 @@ public class Product {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Boolean getBestseller() {
+        return bestseller;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }
