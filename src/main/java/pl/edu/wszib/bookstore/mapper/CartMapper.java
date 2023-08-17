@@ -6,8 +6,10 @@ import org.mapstruct.MappingTarget;
 import pl.edu.wszib.bookstore.dto.CartDTO;
 import pl.edu.wszib.bookstore.dto.ProductDTO;
 import pl.edu.wszib.bookstore.model.Cart;
+import pl.edu.wszib.bookstore.model.CartItem;
 import pl.edu.wszib.bookstore.model.Product;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Mapper(
@@ -22,11 +24,16 @@ public interface CartMapper {
 
     List<CartDTO> toDTO(List<Cart> carts);
 
-    @AfterMapping
-    default void setQuantity(@MappingTarget ProductDTO productDTO, Product product) {
-        if (product.getQuantity() < 0) {
-            productDTO.setQuantity(1);
-        }
+    List<Cart> toDB(List<CartDTO> cartDTOS);
 
+
+    @AfterMapping
+    default void calculateTotalPrice(@MappingTarget CartDTO cartDTO, Cart cart) {
+        BigDecimal total = BigDecimal.ZERO;
+        for (CartItem cartItem : cart.getItems()) {
+            BigDecimal itemPrice = cartItem.getProduct().getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity()));
+            total = total.add(itemPrice);
+        }
+        cartDTO.setTotalPrice(total);
     }
 }

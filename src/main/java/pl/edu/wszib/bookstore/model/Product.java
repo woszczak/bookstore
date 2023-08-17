@@ -5,7 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.lang.NonNull;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.URL;
 
 
 @Entity
@@ -25,9 +29,7 @@ public class Product {
     @Column(name = "price")
     private BigDecimal price;
 
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category")
+    @ManyToOne
     private Category category;
 
     @Column(name = "bestseller")
@@ -37,9 +39,17 @@ public class Product {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "picture")
-    @Lob
-    private byte[] picture;
+    @Column(nullable = true)
+    private  String imagePath;
+
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
     public Boolean isBestseller() {
         return bestseller;
@@ -59,13 +69,6 @@ public class Product {
 
 
 
-    public byte[] getPicture() {
-        return picture;
-    }
-
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
-    }
 
     public Product() {
     }
@@ -106,4 +109,7 @@ public class Product {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+
+
 }

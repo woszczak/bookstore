@@ -33,19 +33,8 @@ public class Cart {
     @UpdateTimestamp
     private Date updateDate;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @Column(name = "subtotal")
-    private BigDecimal subtotal;
-
-    @Column(name = "shippingCost")
-    private BigDecimal shippingCost;
-
-    @Column(name = "totalAmount")
-    private BigDecimal totalAmount;
-
+    public Cart() {
+    }
 
     public Long getId() {
         return id;
@@ -87,35 +76,4 @@ public class Cart {
         this.updateDate = updateDate;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public BigDecimal getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(BigDecimal subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public BigDecimal getShippingCost() {
-        return shippingCost;
-    }
-
-    public void setShippingCost(BigDecimal shippingCost) {
-        this.shippingCost = shippingCost;
-    }
-
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
-    }
 }

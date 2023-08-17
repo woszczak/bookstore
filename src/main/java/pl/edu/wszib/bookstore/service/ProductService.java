@@ -11,9 +11,11 @@ import java.util.List;
 public interface ProductService {
     List<ProductDTO> getAllProducts();
     ProductDTO getProduct(Long id);
-    ProductDTO save(ProductDTO productDTO);
+    ProductDTO save(ProductDTO productDTO) throws IOException;
     void delete(Long id);
-    List<ProductDTO> getProductsByCategory(Category category);
+
+    List<ProductDTO> getProductsByCategory(String categoryName);
+
     List<ProductDTO> getBestsellers();
     ProductDTO edit(Long id, String name, BigDecimal price, Category category, Boolean bestseller, Integer quantity, MultipartFile picture) throws IOException;
 

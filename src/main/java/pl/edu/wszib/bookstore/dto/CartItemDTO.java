@@ -8,15 +8,15 @@ import java.util.Date;
 public class CartItemDTO {
 
     private Long id;
-    private Product product;
+    private ProductDTO productDTO;
     private Integer quantity;
     private Cart cart;
     private Date createDate;
     private Date updateDate;
 
-    public CartItemDTO(Long id, Product product, Integer quantity, Cart cart, Date createDate, Date updateDate) {
+    public CartItemDTO(Long id, ProductDTO productDTO, Integer quantity, Cart cart, Date createDate, Date updateDate) {
         this.id = id;
-        this.product = product;
+        this.productDTO = productDTO;
         this.quantity = quantity;
         this.cart = cart;
         this.createDate = createDate;
@@ -31,12 +31,12 @@ public class CartItemDTO {
         this.id = id;
     }
 
-    public Product getProduct() {
-        return product;
+    public ProductDTO getProductDTO() {
+        return productDTO;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductDTO(ProductDTO productDTO) {
+        this.productDTO = productDTO;
     }
 
     public Integer getQuantity() {

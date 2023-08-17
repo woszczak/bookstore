@@ -40,9 +40,9 @@ public class ProductController {
 
 
     @GetMapping("/category/{category}")
+
     public List<ProductDTO> getProductsByCategory(@PathVariable("category") String categoryName) {
-        Category category = Category.valueOf(categoryName.toUpperCase());
-        return productService.getProductsByCategory(category);
+        return productService.getProductsByCategory(categoryName);
     }
 
 
@@ -74,11 +74,11 @@ public class ProductController {
                                                   @RequestParam("quantity") Integer quantity,
                                                   @RequestParam(value = "picture", required = false) MultipartFile picture
     ) throws IOException {
-        ProductDTO updatedProductDTO = productService.edit(id, name, price, category, bestseller, quantity, picture );
+        ProductDTO updatedProductDTO = productService.edit(id, name, price, category, bestseller, quantity, picture);
 
         if (updatedProductDTO != null) {
             return ResponseEntity.ok(updatedProductDTO);
-        }else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }

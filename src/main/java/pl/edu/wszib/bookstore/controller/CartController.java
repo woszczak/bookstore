@@ -9,22 +9,16 @@ import pl.edu.wszib.bookstore.model.Cart;
 import pl.edu.wszib.bookstore.model.Product;
 import pl.edu.wszib.bookstore.service.CartService;
 import pl.edu.wszib.bookstore.service.ProductService;
-
 @RestController
 @RequestMapping("/api/cart")
 public class CartController {
 
     private CartService cartService;
-    private ProductService productService;
-    private CartMapper cartMapper;
 
 
-    public CartController(CartService cartService, ProductService productService, CartMapper cartMapper) {
+    public CartController(CartService cartService) {
         this.cartService = cartService;
-        this.productService = productService;
-        this.cartMapper = cartMapper;
     }
-
 
     @PutMapping("/add/{productId}")
     public CartDTO add(@PathVariable Long productId, @RequestParam(required = false, defaultValue = "1") Integer quantity) {
@@ -43,19 +37,18 @@ public class CartController {
     }
 
 
-
-@PutMapping("remove/{productId}")
-    private CartDTO remove(@PathVariable Long productId, @RequestParam(required = false, defaultValue = "1") Integer quantity){
+    @PutMapping("remove/{productId}")
+    private CartDTO remove(@PathVariable Long productId,
+                           @RequestParam(required = false, defaultValue = "1") Integer quantity) {
         return cartService.remove(productId, quantity);
-}
+    }
 
-@PostMapping("/clear")
-    public CartDTO clear(){
+    @PostMapping("/clear")
+    public CartDTO clear() {
         return cartService.clear();
-}
+    }
 
 }
-
 
 
 

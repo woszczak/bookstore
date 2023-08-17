@@ -4,10 +4,10 @@ package pl.edu.wszib.bookstore.mapper;
 import org.mapstruct.Mapper;
 import pl.edu.wszib.bookstore.dto.CartItemDTO;
 import pl.edu.wszib.bookstore.dto.CategoryDTO;
-import pl.edu.wszib.bookstore.mapper.ProductMapper;
 import pl.edu.wszib.bookstore.model.CartItem;
 
 import java.util.List;
+
 
 @Mapper(componentModel = "spring",
         uses = {ProductMapper.class})
