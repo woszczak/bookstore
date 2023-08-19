@@ -4,10 +4,8 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import pl.edu.wszib.bookstore.dto.CartDTO;
-import pl.edu.wszib.bookstore.dto.ProductDTO;
 import pl.edu.wszib.bookstore.model.Cart;
 import pl.edu.wszib.bookstore.model.CartItem;
-import pl.edu.wszib.bookstore.model.Product;
 
 import java.math.BigDecimal;
 import java.util.List;

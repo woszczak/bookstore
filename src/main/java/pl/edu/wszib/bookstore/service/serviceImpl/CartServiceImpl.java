@@ -13,8 +13,6 @@ import pl.edu.wszib.bookstore.repository.CartRepository;
 import pl.edu.wszib.bookstore.repository.ProductRepository;
 import pl.edu.wszib.bookstore.service.CartService;
 
-import java.math.BigDecimal;
-import java.util.Optional;
 
 @Service
 public class CartServiceImpl implements CartService {

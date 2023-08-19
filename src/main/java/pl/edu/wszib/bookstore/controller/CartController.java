@@ -1,14 +1,7 @@
 package pl.edu.wszib.bookstore.controller;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wszib.bookstore.dto.CartDTO;
-import pl.edu.wszib.bookstore.dto.ProductDTO;
-import pl.edu.wszib.bookstore.mapper.CartMapper;
-import pl.edu.wszib.bookstore.model.Cart;
-import pl.edu.wszib.bookstore.model.Product;
 import pl.edu.wszib.bookstore.service.CartService;
-import pl.edu.wszib.bookstore.service.ProductService;
 @RestController
 @RequestMapping("/api/cart")
 public class CartController {

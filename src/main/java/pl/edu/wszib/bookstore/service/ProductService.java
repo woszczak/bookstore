@@ -1,9 +1,6 @@
 package pl.edu.wszib.bookstore.service;
 
-import org.springframework.web.multipart.MultipartFile;
 import pl.edu.wszib.bookstore.dto.ProductDTO;
-import pl.edu.wszib.bookstore.model.Category;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,8 +13,10 @@ public interface ProductService {
 
     List<ProductDTO> getProductsByCategory(String categoryName);
 
+    List<ProductDTO> searchProductByName(String keyword);
+
     List<ProductDTO> getBestsellers();
-    ProductDTO edit(Long id, String name, BigDecimal price, Category category, Boolean bestseller, Integer quantity, MultipartFile picture) throws IOException;
+    ProductDTO edit(Long id, String name, BigDecimal price, String categoryName, Boolean bestseller, Integer quantity) throws IOException;
 
 
 }

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -63,30 +64,16 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ProductDTO save(ProductDTO productDTO)  throws IOException {
-        MultipartFile image = productDTO.getImage();
-        String imagePath = saveImage(image);
-
+    public ProductDTO save(ProductDTO productDTO) throws IOException {
         Product newProduct = new Product();
         newProduct.setName(productDTO.getName());
         newProduct.setPrice(productDTO.getPrice());
         newProduct.setQuantity(productDTO.getQuantity());
-        newProduct.setImagePath(imagePath);
+        newProduct.setBestseller(productDTO.isBestseller());
+        newProduct.setCategory(productDTO.getCategory());
 
         Product savedProduct = productRepository.save(newProduct);
         return productMapper.toDTO(savedProduct);
-    }
-
-    private String saveImage(MultipartFile image) throws IOException {
-
-        if ((image == null) || image.isEmpty()){
-            return null;
-        }
-        String uploadDirectory = System.getProperty("user.dir") + "/uploads";
-        String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
-        String filePath = Paths.get(uploadDirectory, fileName).toString();
-        Files.write(Paths.get(filePath), image.getBytes());
-        return filePath;
     }
 
 
@@ -98,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> getProductsByCategory(String categoryName) {
         Category category = categoryRepository.findByName(categoryName);
-        if (category == null){
+        if (category == null) {
             return new ArrayList<>();
         }
         List<Product> products = productRepository.findByCategory(category);
@@ -106,14 +93,26 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-
+    @Override
+    public List<ProductDTO> searchProductByName(String keyword) {
+        List<ProductDTO> productDTOS = productRepository.searchProductByName(keyword)
+                .stream()
+                .map(productMapper::toDTO).collect(Collectors.toList());
+        return productDTOS;
+    }
 
     @Override
-    public ProductDTO edit(Long id, String name, BigDecimal price, Category category, Boolean bestseller, Integer quantity, MultipartFile image) throws IOException {
+    public ProductDTO edit(Long id, String name, BigDecimal price, String categoryName, Boolean bestseller, Integer quantity) throws IOException {
         Product product = productRepository.findById(id).orElse(null);
 
         if (product == null) {
             return null;
+        }
+
+
+        Category category = categoryRepository.findByName(categoryName);
+        if (category == null) {
+            throw new IllegalArgumentException("Invalid categoryId");
         }
         product.setName(name);
         product.setQuantity(quantity);
@@ -122,10 +121,6 @@ public class ProductServiceImpl implements ProductService {
         product.setPrice(price);
 
 
-        if (image != null && !image.isEmpty()){
-            String imagePath = saveImage(image);
-            product.setImagePath(imagePath);
-        }
         Product updatedProduct = productRepository.save(product);
 
         return productMapper.toDTO(updatedProduct);

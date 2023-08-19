@@ -2,7 +2,6 @@ package pl.edu.wszib.bookstore.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 import pl.edu.wszib.bookstore.dto.ProductDTO;
 import pl.edu.wszib.bookstore.model.Product;
 

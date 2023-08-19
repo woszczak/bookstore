@@ -1,11 +1,7 @@
 package pl.edu.wszib.bookstore.dto;
 
-import pl.edu.wszib.bookstore.model.CartItem;
-import pl.edu.wszib.bookstore.model.CartStatus;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CartDTO {

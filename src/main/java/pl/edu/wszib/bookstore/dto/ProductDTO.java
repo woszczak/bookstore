@@ -8,39 +8,24 @@ import java.math.BigDecimal;
 
 public class ProductDTO {
     private Long id;
-
     private String name;
-
     private BigDecimal price;
     private Category category;
-
-    private MultipartFile image;
-
-
     private boolean bestseller;
     private Integer quantity;
 
     public ProductDTO() {
     }
 
-    public ProductDTO(Long id, String name, BigDecimal price, Category category, MultipartFile image, boolean bestseller, Integer quantity) {
+    public ProductDTO(Long id, String name, BigDecimal price, Category category, boolean bestseller, Integer quantity) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
-        this.image = image;
         this.bestseller = bestseller;
         this.quantity = quantity;
     }
 
-
-    public MultipartFile getImage() {
-        return image;
-    }
-
-    public void setImage(MultipartFile image) {
-        this.image = image;
-    }
 
     public boolean isBestseller() {
         return bestseller;

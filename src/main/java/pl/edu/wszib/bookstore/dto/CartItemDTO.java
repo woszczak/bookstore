@@ -1,7 +1,6 @@
 package pl.edu.wszib.bookstore.dto;
 
 import pl.edu.wszib.bookstore.model.Cart;
-import pl.edu.wszib.bookstore.model.Product;
 
 import java.util.Date;
 
