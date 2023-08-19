@@ -16,6 +16,7 @@
 - sortowanie od najwyższej do najższej ceny
 - sortowanie od najniższej do najwyższej ceny
 - wyświetlanie szczegółów książki
+- wyświetlanie koszyków 
 
 
 3. Koszyk i zamówienia

@@ -3,7 +3,10 @@ package pl.edu.wszib.bookstore.service.serviceImpl;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import pl.edu.wszib.bookstore.dto.CartDTO;
+import pl.edu.wszib.bookstore.dto.CartItemDTO;
+import pl.edu.wszib.bookstore.dto.ProductDTO;
 import pl.edu.wszib.bookstore.mapper.CartMapper;
+import pl.edu.wszib.bookstore.mapper.ProductMapper;
 import pl.edu.wszib.bookstore.model.Cart;
 import pl.edu.wszib.bookstore.model.CartItem;
 import pl.edu.wszib.bookstore.model.CartStatus;
@@ -12,6 +15,9 @@ import pl.edu.wszib.bookstore.repository.CartItemRepository;
 import pl.edu.wszib.bookstore.repository.CartRepository;
 import pl.edu.wszib.bookstore.repository.ProductRepository;
 import pl.edu.wszib.bookstore.service.CartService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -22,13 +28,17 @@ public class CartServiceImpl implements CartService {
     private CartItemRepository cartItemRepository;
     private ProductRepository productRepository;
     private CartMapper mapper;
+    private ProductMapper productMapper;
 
-    public CartServiceImpl(CartRepository cartRepository, CartItemRepository cartItemRepository, ProductRepository productRepository, CartMapper mapper) {
+
+    public CartServiceImpl(CartRepository cartRepository, CartItemRepository cartItemRepository, ProductRepository productRepository, CartMapper mapper, ProductMapper productMapper) {
         this.cartRepository = cartRepository;
         this.cartItemRepository = cartItemRepository;
         this.productRepository = productRepository;
         this.mapper = mapper;
+        this.productMapper = productMapper;
     }
+
 
     @Override
     @Transactional
@@ -50,7 +60,12 @@ public class CartServiceImpl implements CartService {
             return null;
         }
 
-        return mapper.toDTO(cartRepository.save(cart));
+        if (newlyAdded){
+            cartItemRepository.save(cartItem);
+        }
+
+        cart = cartRepository.save(cart);
+        return mapper.toDTO(cart);
     }
 
     @Override
@@ -66,6 +81,9 @@ public class CartServiceImpl implements CartService {
 
         if (cartItem.getQuantity() <= 0){
             cart.getItems().remove(cartItem);
+
+            cartItemRepository.delete(cartItem);
+
         }else {
             cartItemRepository.save(cartItem);
         }
@@ -88,17 +106,38 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    @Transactional
-    public CartDTO get() {
-        return mapper.toDTO(getOrCreate());
-    }
-
-    @Override
     public CartDTO get(Long id) {
         return cartRepository
                 .findById(id)
                 .map(mapper::toDTO)
                 .orElse(null);
+    }
+
+
+
+    @Override
+    @Transactional
+    public CartDTO get() {
+        Cart cart = getOrCreate();
+        List<CartItemDTO> cartItemDTOs = new ArrayList<>();
+
+        for (CartItem cartItem : cart.getItems()) {
+            ProductDTO productDTO = productMapper.toDTO(cartItem.getProduct());
+            CartItemDTO cartItemDTO = new CartItemDTO(
+                    cartItem.getId(),
+                    productDTO,
+                    cartItem.getQuantity(),
+                    cartItem.getCart(),
+                    cartItem.getCreateDate(),
+                    cartItem.getUpdateDate()
+            );
+            cartItemDTOs.add(cartItemDTO);
+        }
+
+        CartDTO cartDTO = mapper.toDTO(cart);
+        cartDTO.setItems(cartItemDTOs);
+
+        return cartDTO;
     }
 
     private Product getProduct(Long id) {

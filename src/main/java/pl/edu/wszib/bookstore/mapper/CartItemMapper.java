@@ -13,6 +13,8 @@ import java.util.List;
         uses = {ProductMapper.class})
 public interface CartItemMapper {
 
+
+
     CartItem toDB(CartItemDTO cartItemDTO);
     CartItemDTO toDTO(CartItem cartItem);
     List<CartItem> toDB(List<CategoryDTO> cartItemDTOs);

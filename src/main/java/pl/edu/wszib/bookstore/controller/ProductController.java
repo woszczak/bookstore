@@ -56,12 +56,12 @@ public class ProductController {
         return productService.getBestsellers();
     }
 
-   @GetMapping("/products/searchByPrice")
+    @GetMapping("/products/searchByPrice")
     public ResponseEntity<List<ProductDTO>> searchProductsByPriceRange(
             @RequestParam BigDecimal minPrice, @RequestParam BigDecimal maxPrice) {
-       List<ProductDTO> productDTOS = productService.searchProductsByPriceRange(minPrice, maxPrice);
-       return ResponseEntity.ok(productDTOS);
-   }
+        List<ProductDTO> productDTOS = productService.searchProductsByPriceRange(minPrice, maxPrice);
+        return ResponseEntity.ok(productDTOS);
+    }
 
     @GetMapping("/products/sortedByPriceAsc")
     public List<ProductDTO> getAllProductsSortedByPriceAsc() {

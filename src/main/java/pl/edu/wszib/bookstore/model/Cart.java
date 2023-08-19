@@ -20,7 +20,6 @@ public class Cart {
     @Column(nullable = false)
     private CartStatus status;
 
-
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private List<CartItem> items = new ArrayList<>();

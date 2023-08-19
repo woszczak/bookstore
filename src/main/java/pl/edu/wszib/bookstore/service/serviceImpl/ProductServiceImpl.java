@@ -10,15 +10,11 @@ import pl.edu.wszib.bookstore.model.Product;
 import pl.edu.wszib.bookstore.repository.CategoryRepository;
 import pl.edu.wszib.bookstore.repository.ProductRepository;
 import pl.edu.wszib.bookstore.service.ProductService;
-
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
