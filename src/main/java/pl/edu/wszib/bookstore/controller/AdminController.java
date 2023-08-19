@@ -36,8 +36,8 @@ public class AdminController {
 
 
     @PutMapping("admin/edit/{id}")
-    public ResponseEntity<ProductDTO> editProduct(@PathVariable("id") Long id, @RequestParam("name") String name, @RequestParam("price") BigDecimal price, @RequestParam("categoryName") String categoryName, @RequestParam("bestseller") Boolean bestseller, @RequestParam("quantity") Integer quantity) throws IOException {
-        ProductDTO updatedProductDTO = productService.edit(id, name, price, categoryName, bestseller, quantity);
+    public ResponseEntity<ProductDTO> editProduct(@PathVariable("id") Long id, @RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("price") BigDecimal price, @RequestParam("categoryName") String categoryName, @RequestParam("bestseller") Boolean bestseller, @RequestParam("quantity") Integer quantity) throws IOException {
+        ProductDTO updatedProductDTO = productService.edit(id, name, description, price, categoryName, bestseller, quantity);
 
         if (updatedProductDTO != null) {
             return ResponseEntity.ok(updatedProductDTO);

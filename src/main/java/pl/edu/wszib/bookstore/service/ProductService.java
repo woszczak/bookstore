@@ -16,7 +16,8 @@ public interface ProductService {
     List<ProductDTO> searchProductByName(String keyword);
 
     List<ProductDTO> getBestsellers();
-    ProductDTO edit(Long id, String name, BigDecimal price, String categoryName, Boolean bestseller, Integer quantity) throws IOException;
-
-
+    ProductDTO edit(Long id, String name, String description, BigDecimal price, String categoryName, Boolean bestseller, Integer quantity) throws IOException;
+    List<ProductDTO> searchProductsByPriceRange(BigDecimal minPrice, BigDecimal maxPrice);
+    List<ProductDTO> getAllProductsSortedByPriceAsc();
+    List<ProductDTO> getAllProductsSortedByPriceDesc();
 }

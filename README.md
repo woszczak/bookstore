@@ -1,8 +1,33 @@
 # Justyna Woszczak
+
 # Bookstore
-## Projekt Bookstore to aplikacja webowa, która umożliwia użytkownikom przeglądanie i zakup książek, a także dostarcza funkcjonalność dla administratora, taką jak dodawanie i usuwanie produktów oraz przeglądanie zamówień.
+
+## Projekt Bookstore to aplikacja, która umożliwia użytkownikom przeglądanie i zakup książek, a także dostarcza funkcjonalność dla administratora, taką jak dodawanie i usuwanie produktów oraz przeglądanie zamówień.
+
 # Główne funkcje:
+
 1. Przeglądanie ksiażek
-2. Szczegóły książki
+
+- wyświetlanie wszystkich książek
+- wyświetlanie książek z wybranej kategorii
+- wyświetlanie tylko bestsellerów
+- wyszukiwanie po nazwie produktu
+- wyszukiwanie w podanym zakresie cenowym
+- sortowanie od najwyższej do najższej ceny
+- sortowanie od najniższej do najwyższej ceny
+- wyświetlanie szczegółów książki
+
+
 3. Koszyk i zamówienia
+
+- dodawanie produktu do koszyka
+- usuwanie produktu z koszyka
+- usuwanie całego koszyka
+
+
 4. Panel administracyjny
+
+- dodawanie książek
+- usuwanie książek
+- edycja istniejących książek
+- wyświetlanie zamówień klientów

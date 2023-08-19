@@ -22,6 +22,11 @@ public class Product {
     @Column(name = "name")
     private String name;
 
+
+    @Column(name = "description", length = 1000)
+    private String description;
+
+
     @Column(name = "price")
     private BigDecimal price;
 
@@ -36,6 +41,13 @@ public class Product {
     private Integer quantity;
 
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Boolean isBestseller() {
         return bestseller;

@@ -67,6 +67,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO save(ProductDTO productDTO) throws IOException {
         Product newProduct = new Product();
         newProduct.setName(productDTO.getName());
+        newProduct.setDescription(productDTO.getDescription());
         newProduct.setPrice(productDTO.getPrice());
         newProduct.setQuantity(productDTO.getQuantity());
         newProduct.setBestseller(productDTO.isBestseller());
@@ -102,7 +103,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO edit(Long id, String name, BigDecimal price, String categoryName, Boolean bestseller, Integer quantity) throws IOException {
+    public ProductDTO edit(Long id, String name, String description, BigDecimal price, String categoryName, Boolean bestseller, Integer quantity) throws IOException {
         Product product = productRepository.findById(id).orElse(null);
 
         if (product == null) {
@@ -115,6 +116,7 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("Invalid categoryId");
         }
         product.setName(name);
+        product.getDescription();
         product.setQuantity(quantity);
         product.setBestseller(bestseller);
         product.setCategory(category);
@@ -126,4 +128,23 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.toDTO(updatedProduct);
 
     }
+
+    @Override
+    public List<ProductDTO> searchProductsByPriceRange(BigDecimal minPrice, BigDecimal maxPrice) {
+        List<Product> products = productRepository.searchProductsByPriceRange(minPrice, maxPrice);
+        return productMapper.toDTOList(products);
+    }
+
+    @Override
+    public List<ProductDTO> getAllProductsSortedByPriceAsc() {
+        List<Product> products = productRepository.findAllByOrderByPriceAsc();
+        return productMapper.toDTOList(products);
+    }
+
+    @Override
+    public List<ProductDTO> getAllProductsSortedByPriceDesc() {
+        List<Product> products = productRepository.findAllByOrderByPriceDesc();
+        return productMapper.toDTOList(products);
+    }
+
 }

@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
 
+    @Mapping(source = "description", target = "description")
     @Mapping(source = "id", target = "id")
     ProductDTO toDTO(Product product);
 
@@ -18,6 +19,7 @@ public interface ProductMapper {
     @Mapping(source = "price", target = "price")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "bestseller", target = "bestseller")
+    @Mapping(source = "description", target = "description")
     Product toDB(ProductDTO productDTO);
 
     List<ProductDTO> toDTOList(List<Product> products);

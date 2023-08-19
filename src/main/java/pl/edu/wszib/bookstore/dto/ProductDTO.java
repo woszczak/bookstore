@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 public class ProductDTO {
     private Long id;
     private String name;
+    private String description;
     private BigDecimal price;
     private Category category;
     private boolean bestseller;
@@ -17,15 +18,23 @@ public class ProductDTO {
     public ProductDTO() {
     }
 
-    public ProductDTO(Long id, String name, BigDecimal price, Category category, boolean bestseller, Integer quantity) {
+    public ProductDTO(Long id, String name, String description, BigDecimal price, Category category, boolean bestseller, Integer quantity) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.price = price;
         this.category = category;
         this.bestseller = bestseller;
         this.quantity = quantity;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public boolean isBestseller() {
         return bestseller;
