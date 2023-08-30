@@ -2,6 +2,9 @@ package pl.edu.wszib.bookstore.service;
 
 
 import pl.edu.wszib.bookstore.dto.CartDTO;
+import pl.edu.wszib.bookstore.dto.CartStatusDTO;
+
+import java.util.List;
 
 
 public interface CartService {
@@ -10,10 +13,14 @@ public interface CartService {
 
     CartDTO remove(Long productId, Integer quantity);
 
-    CartDTO submit(String email);
+//    CartDTO submit(String email);
 
     CartDTO clear();
     CartDTO get();
     CartDTO get(Long id);
+    CartDTO submitCart(Long cartId);
+    List<CartDTO> getByStatus(CartStatusDTO statusDTO);
+
+
 
 }

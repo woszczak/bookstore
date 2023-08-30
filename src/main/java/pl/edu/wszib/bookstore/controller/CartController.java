@@ -1,7 +1,11 @@
 package pl.edu.wszib.bookstore.controller;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wszib.bookstore.dto.CartDTO;
+import pl.edu.wszib.bookstore.dto.CartStatusDTO;
 import pl.edu.wszib.bookstore.service.CartService;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/cart")
 public class CartController {
@@ -39,6 +43,18 @@ public class CartController {
     @PostMapping("/clear")
     public CartDTO clear() {
         return cartService.clear();
+    }
+
+
+    @GetMapping("/submitted")
+    public List<CartDTO> getSubmittedCarts() {
+        return cartService.getByStatus(CartStatusDTO.SUBMITTED);
+    }
+
+
+    @PostMapping("/{cartId}/submit")
+    public CartDTO submitCart(@PathVariable Long cartId) {
+        return cartService.submitCart(cartId);
     }
 
 }

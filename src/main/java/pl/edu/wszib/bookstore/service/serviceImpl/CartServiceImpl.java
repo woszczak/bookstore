@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import pl.edu.wszib.bookstore.dto.CartDTO;
 import pl.edu.wszib.bookstore.dto.CartItemDTO;
+import pl.edu.wszib.bookstore.dto.CartStatusDTO;
 import pl.edu.wszib.bookstore.dto.ProductDTO;
 import pl.edu.wszib.bookstore.mapper.CartMapper;
 import pl.edu.wszib.bookstore.mapper.ProductMapper;
@@ -18,6 +19,8 @@ import pl.edu.wszib.bookstore.service.CartService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -91,10 +94,14 @@ public class CartServiceImpl implements CartService {
         return mapper.toDTO(cartRepository.save(cart));
     }
 
-    @Override
-    public CartDTO submit(String email) {
-        return null;
-    }
+//    @Override
+//    public CartDTO submit(String email) {
+//        return null;
+//    }
+
+
+
+
 
     @Transactional
     @Override
@@ -158,4 +165,28 @@ public class CartServiceImpl implements CartService {
     }
 
 
+    @Override
+    public CartDTO submitCart(Long cartId) {
+
+        Cart cart = cartRepository.findById(cartId).orElse(null);
+
+        if (cart != cartRepository.findById(cartId).orElse(null)) ;
+
+        if (cart != null && cart.getStatus() == CartStatus.NEW) {
+            cart.setStatus(CartStatus.SUBMITTED);
+            cartRepository.save(cart);
+            return mapper.toDTO(cart);
+        }
+
+        return null;
+    }
+
+
+    @Override
+    public List<CartDTO> getByStatus(CartStatusDTO statusDTO) {
+        CartStatus cartStatus = CartStatus.valueOf(statusDTO.name());
+        Optional<Cart> carts = cartRepository.findByStatus(cartStatus);
+        return carts.stream()
+                .map(mapper::toDTO).collect(Collectors.toList());
+    }
 }
