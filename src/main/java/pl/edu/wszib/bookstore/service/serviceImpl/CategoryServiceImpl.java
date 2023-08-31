@@ -3,6 +3,7 @@ package pl.edu.wszib.bookstore.service.serviceImpl;
 
 import org.springframework.stereotype.Service;
 import pl.edu.wszib.bookstore.dto.CategoryDTO;
+import pl.edu.wszib.bookstore.exceptions.NotFound;
 import pl.edu.wszib.bookstore.mapper.CategoryMapper;
 import pl.edu.wszib.bookstore.model.Category;
 import pl.edu.wszib.bookstore.repository.CategoryRepository;
@@ -30,8 +31,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDTO get(Long id) {
-        return categoryRepository.findById(id).map(mapper::toDTO)
-                .orElseThrow(null);
+        return categoryRepository.findById(id).map(mapper::toDTO).
+        orElseThrow(() -> new NotFound(id, Category.class));
+
     }
 
     @Override
@@ -45,7 +47,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDTO update(CategoryDTO categoryDTO) {
         Category existing = categoryRepository.findById(categoryDTO.getId())
-                .orElseThrow(null);
+                .orElseThrow(() -> new NotFound(categoryDTO.getId(), Category.class));
+
         Category incoming = mapper.toDB(categoryDTO);
         existing.setName(incoming.getName());
         return mapper.toDTO(categoryRepository.save(existing));
@@ -54,7 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void delete(Long id) {
         Category exising = categoryRepository.findById(id)
-                .orElseThrow(null);
+                .orElseThrow(() -> new NotFound(id, Category.class));
         categoryRepository.delete(exising);
     }
 

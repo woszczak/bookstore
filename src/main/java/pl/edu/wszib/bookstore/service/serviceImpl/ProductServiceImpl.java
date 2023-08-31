@@ -2,19 +2,19 @@ package pl.edu.wszib.bookstore.service.serviceImpl;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import pl.edu.wszib.bookstore.dto.ProductDTO;
+import pl.edu.wszib.bookstore.exceptions.NotFound;
 import pl.edu.wszib.bookstore.mapper.ProductMapper;
 import pl.edu.wszib.bookstore.model.Category;
 import pl.edu.wszib.bookstore.model.Product;
 import pl.edu.wszib.bookstore.repository.CategoryRepository;
 import pl.edu.wszib.bookstore.repository.ProductRepository;
 import pl.edu.wszib.bookstore.service.ProductService;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,13 +42,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO getProduct(Long id) {
 
-        Optional<Product> productOptional = productRepository.findById(id);
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
-            return productMapper.toDTO(product);
-        } else {
-            return null;
-        }
+        return productRepository.findById(id).map(productMapper::toDTO).orElseThrow(() -> new NotFound(id, Product.class));
     }
 
 
@@ -76,7 +70,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Long id) {
-        productRepository.deleteById(id);
+
+    productRepository.deleteById(id);
     }
 
     @Override
@@ -100,7 +95,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO edit(Long id, String name, String description, BigDecimal price, String categoryName, Boolean bestseller, Integer quantity) throws IOException {
-        Product product = productRepository.findById(id).orElse(null);
+        Product product = productRepository.findById(id).orElseThrow(() -> new NotFound(id, Product.class));
 
         if (product == null) {
             return null;

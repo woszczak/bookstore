@@ -1,15 +1,12 @@
 package pl.edu.wszib.bookstore.controller;
 
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wszib.bookstore.dto.ProductDTO;
 import pl.edu.wszib.bookstore.mapper.ProductMapper;
 import pl.edu.wszib.bookstore.service.CategoryService;
 import pl.edu.wszib.bookstore.service.ProductService;
-
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 

@@ -13,8 +13,6 @@ public interface CartService {
 
     CartDTO remove(Long productId, Integer quantity);
 
-//    CartDTO submit(String email);
-
     CartDTO clear();
     CartDTO get();
     CartDTO get(Long id);

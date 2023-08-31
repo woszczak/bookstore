@@ -6,6 +6,7 @@ import pl.edu.wszib.bookstore.dto.CartDTO;
 import pl.edu.wszib.bookstore.dto.CartItemDTO;
 import pl.edu.wszib.bookstore.dto.CartStatusDTO;
 import pl.edu.wszib.bookstore.dto.ProductDTO;
+import pl.edu.wszib.bookstore.exceptions.NotFound;
 import pl.edu.wszib.bookstore.mapper.CartMapper;
 import pl.edu.wszib.bookstore.mapper.ProductMapper;
 import pl.edu.wszib.bookstore.model.Cart;
@@ -94,14 +95,6 @@ public class CartServiceImpl implements CartService {
         return mapper.toDTO(cartRepository.save(cart));
     }
 
-//    @Override
-//    public CartDTO submit(String email) {
-//        return null;
-//    }
-
-
-
-
 
     @Transactional
     @Override
@@ -117,7 +110,8 @@ public class CartServiceImpl implements CartService {
         return cartRepository
                 .findById(id)
                 .map(mapper::toDTO)
-                .orElse(null);
+                .orElseThrow(() -> new NotFound(id, Cart.class));
+
     }
 
 
@@ -148,7 +142,8 @@ public class CartServiceImpl implements CartService {
     }
 
     private Product getProduct(Long id) {
-        return productRepository.findById(id).orElseThrow(null);
+        return productRepository.findById(id).orElseThrow(() -> new NotFound(id, Product.class));
+
     }
 
 

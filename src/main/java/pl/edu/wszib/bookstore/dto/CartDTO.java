@@ -2,7 +2,6 @@ package pl.edu.wszib.bookstore.dto;
 
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CartDTO {
