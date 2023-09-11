@@ -12,7 +12,6 @@
 - wyświetlanie książek z wybranej kategorii
 - wyświetlanie tylko bestsellerów
 - wyszukiwanie po nazwie produktu
-- wyszukiwanie w podanym zakresie cenowym
 - sortowanie od najwyższej do najższej ceny
 - sortowanie od najniższej do najwyższej ceny
 - wyświetlanie szczegółów książki
@@ -23,7 +22,7 @@
 
 - dodawanie produktu do koszyka
 - usuwanie produktu z koszyka
-- usuwanie całego koszyka
+- wysyłanie zamówienia
 
 
 4. Panel administracyjny
@@ -31,4 +30,4 @@
 - dodawanie książek
 - usuwanie książek
 - edycja istniejących książek
-- wyświetlanie zamówień klientów
+- dodawanie, edytowanie i usuwanie kategorii książek
