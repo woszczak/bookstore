@@ -1,24 +1,33 @@
+
 package pl.edu.wszib.bookstore.mapper;
 
-
-import org.mapstruct.Mapper;
-import pl.edu.wszib.bookstore.dto.CartItemDTO;
-import pl.edu.wszib.bookstore.dto.CategoryDTO;
-import pl.edu.wszib.bookstore.model.CartItem;
-
-import java.util.List;
+import org.springframework.stereotype.Component;
+import pl.edu.wszib.bookstore.entity.CartItem;
+import pl.edu.wszib.bookstore.model.CartItemModel;
 
 
-@Mapper(componentModel = "spring",
-        uses = {ProductMapper.class})
-public interface CartItemMapper {
+@Component
+public class CartItemMapper {
 
+    public static CartItem toEntity(CartItemModel cartItemModel) {
+        CartItem cartItem = new CartItem();
+        cartItem.setId(cartItemModel.getId());
+        cartItem.setProduct(ProductMapper.toEntity(cartItemModel.getProductModel()));
+        cartItem.setQuantity(cartItemModel.getQuantity());
+        cartItem.setCart(cartItemModel.getCart());
+        cartItem.setCreateDate(cartItemModel.getCreateDate());
+        cartItem.setUpdateDate(cartItemModel.getUpdateDate());
+        return cartItem;
+    }
 
-
-    CartItem toDB(CartItemDTO cartItemDTO);
-    CartItemDTO toDTO(CartItem cartItem);
-    List<CartItem> toDB(List<CategoryDTO> cartItemDTOs);
-    List<CartItemDTO> toDTO(List<CartItem> cartItems);
-
-
+    public static CartItemModel toModel(CartItem cartItem) {
+        CartItemModel cartItemModel = new CartItemModel();
+        cartItemModel.setId(cartItem.getId());
+        cartItemModel.setProductModel(ProductMapper.toModel(cartItem.getProduct()));
+        cartItemModel.setQuantity(cartItem.getQuantity());
+        cartItemModel.setCart(cartItem.getCart());
+        cartItemModel.setCreateDate(cartItem.getCreateDate());
+        cartItemModel.setUpdateDate(cartItem.getUpdateDate());
+        return cartItemModel;
+    }
 }

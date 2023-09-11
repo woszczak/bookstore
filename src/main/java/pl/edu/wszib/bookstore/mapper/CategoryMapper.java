@@ -1,20 +1,29 @@
 package pl.edu.wszib.bookstore.mapper;
 
-import org.mapstruct.Mapper;
-import pl.edu.wszib.bookstore.dto.CategoryDTO;
-import pl.edu.wszib.bookstore.model.Category;
+import org.springframework.stereotype.Component;
+import pl.edu.wszib.bookstore.entity.Category;
+import pl.edu.wszib.bookstore.model.CategoryModel;
 
-import java.util.List;
-
-@Mapper(
-        componentModel = "spring"
-)
-public interface CategoryMapper {
-
-    Category toDB(CategoryDTO categoryDTO);
-    CategoryDTO toDTO(Category category);
-    List<Category> toDB(List<CategoryDTO> categoryDTOs);
-    List<CategoryDTO> toDTO(List<Category> category);
+@Component
+public class CategoryMapper {
 
 
+    public static Category toEntity(CategoryModel categoryModel) {
+
+        Category category = new Category();
+        category.setId(categoryModel.getId());
+        category.setName(categoryModel.getName());
+        category.setCreateDate(categoryModel.getCreateDate());
+        category.setUpdateDate(categoryModel.getUpdateDate());
+        return category;
+    }
+
+    public static CategoryModel toModel(Category category) {
+        CategoryModel categoryModel = new CategoryModel();
+        categoryModel.setId(category.getId());
+        categoryModel.setName(category.getName());
+        categoryModel.setCreateDate(category.getCreateDate());
+        categoryModel.setUpdateDate(category.getUpdateDate());
+        return categoryModel;
+    }
 }

@@ -1,28 +1,24 @@
-package pl.edu.wszib.bookstore.model;
+package pl.edu.wszib.bookstore.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "cart")
-public class Cart {
+
+public class Category {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private CartStatus status;
+    private String name;
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
-    private List<CartItem> items = new ArrayList<>();
 
     @CreationTimestamp
     private Date createDate;
@@ -30,8 +26,6 @@ public class Cart {
     @UpdateTimestamp
     private Date updateDate;
 
-    public Cart() {
-    }
 
     public Long getId() {
         return id;
@@ -41,20 +35,12 @@ public class Cart {
         this.id = id;
     }
 
-    public CartStatus getStatus() {
-        return status;
+    public String getName() {
+        return name;
     }
 
-    public void setStatus(CartStatus status) {
-        this.status = status;
-    }
-
-    public List<CartItem> getItems() {
-        return items;
-    }
-
-    public void setItems(List<CartItem> items) {
-        this.items = items;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getCreateDate() {
@@ -72,5 +58,4 @@ public class Cart {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
-
 }

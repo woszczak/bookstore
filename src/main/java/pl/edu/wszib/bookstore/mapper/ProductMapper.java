@@ -1,26 +1,40 @@
 package pl.edu.wszib.bookstore.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import pl.edu.wszib.bookstore.dto.ProductDTO;
-import pl.edu.wszib.bookstore.model.Product;
-
-import java.util.List;
+import org.springframework.stereotype.Component;
+import pl.edu.wszib.bookstore.entity.Product;
+import pl.edu.wszib.bookstore.model.ProductModel;
 
 
-@Mapper(componentModel = "spring")
-public interface ProductMapper {
+@Component
+public class ProductMapper {
 
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "id", target = "id")
-    ProductDTO toDTO(Product product);
+   public static Product toEntity(ProductModel productModel){
+       Product product = new Product();
+       product.setId(productModel.getId());
+       product.setDescription(productModel.getDescription());
+       product.setBestseller(productModel.isBestseller());
+       product.setCategory(productModel.getCategory());
+       product.setName(productModel.getName());
+       product.setPrice(productModel.getPrice());
+       product.setQuantity(productModel.getQuantity());
+       return product;
+   }
 
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "price", target = "price")
-    @Mapping(source = "quantity", target = "quantity")
-    @Mapping(source = "bestseller", target = "bestseller")
-    @Mapping(source = "description", target = "description")
-    Product toDB(ProductDTO productDTO);
+   public static ProductModel toModel(Product product){
 
-    List<ProductDTO> toDTOList(List<Product> products);
+       ProductModel productModel = new ProductModel();
+       productModel.setId(product.getId());
+       productModel.setDescription(product.getDescription());
+       productModel.setBestseller(product.isBestseller());
+       productModel.setCategory(product.getCategory());
+       productModel.setName(product.getName());
+       productModel.setPrice(product.getPrice());
+       productModel.setQuantity(product.getQuantity());
+       return productModel;
+   }
+
 }
+
+
+
+

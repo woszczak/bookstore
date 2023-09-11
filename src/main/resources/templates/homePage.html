@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: template(~{:: #products-content})}">
+
+<section id="products-content">
+    <div class="container">
+
+        <div class="all-cat">
+            <div class="category-buttons">
+                <a th:href="@{/bestsellers}" class="btn ">Bestsellery</a>
+                <a th:href="@{/category/{categoryName}(categoryName=${category.name})}"
+                   th:each="category : ${categories}"
+                   th:text="${category.name}"
+                   th:attr="data-category='${category.name}'" class="btn "></a>
+            </div>
+        </div>
+        <div class="sort">
+            <a th:href="@{/sortedByPriceAsc}" class="btn btn-sm" id="sort-asc-link">Cena rosnąco</a>
+            <a th:href="@{/sortedByPriceDesc}" class="btn btn-sm" id="sort-desc-link">Cena malejąco</a>
+        </div>
+
+        <table style="width: 100%">
+            <tr th:each="product : ${products}">
+                <td class="product-name">
+                    <h3 th:text="${product.name}"></h3>
+                    <span th:if="${product.bestseller}" class="bestseller-label"><i
+                            class="fa-regular fa-star"></i></span>
+                </td>
+                <td style="text-align: right">
+                    <div class="product-detail"><h3 th:text="|${product.price}zł|"></h3>
+
+                        <form th:action="@{/cart/addToCart/{cartItemId}(cartItemId=${product.id})}" method="post"
+                              th:object="${cartItem}">
+                            <input type="hidden" name="productId" th:value="${product.id}"/>
+                            <input type="number" name="quantity" value="1" min="1"/>
+                            <button class="btn-add" type="submit">Dodaj do koszyka</button>
+                        </form>
+                        <div  class="detail-btn" ><a style="text-align: right" th:href="@{/{product-id}(product-id=${product.id})}"
+                                class="btn">Szczegóły</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</section>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: template(~{:: #edit-category-content})}">
+
+<section id="edit-category-content">
+  <div class="container">
+
+    <table style="width: 100%">
+      <tr th:each="category : ${categories}">
+        <td>
+          <h3 th:text="${category.name}"></h3>
+        </td>
+        <td style="text-align: right" class="product-detail">
+          <a th:href="@{/admin/editCategory/{category-id}(category-id=${category.id})}" class="btn">Edytuj</a>
+          <form th:action="@{/admin/deleteCategory/{category-id}(category-id=${category.id})}" method="post">
+            <input type="hidden" name="_method" value="delete" />
+            <button type="submit" class="btn-danger">Usuń</button>
+          </form>
+        </td>
+      </tr>
+    </table>
+  </div>
+</section>
+</html>

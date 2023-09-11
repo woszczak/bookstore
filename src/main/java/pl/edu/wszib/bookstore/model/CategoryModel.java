@@ -1,9 +1,9 @@
-package pl.edu.wszib.bookstore.dto;
+package pl.edu.wszib.bookstore.model;
 
 
 import java.util.Date;
 
-public class CategoryDTO {
+public class CategoryModel {
 
 
     private Long id;
@@ -12,10 +12,10 @@ public class CategoryDTO {
 
     private Date updateDate;
 
-    public CategoryDTO() {
+    public CategoryModel() {
     }
 
-    public CategoryDTO(Long id, String name, Date createDate, Date updateDate) {
+    public CategoryModel(Long id, String name, Date createDate, Date updateDate) {
         this.id = id;
         this.name = name;
         this.createDate = createDate;

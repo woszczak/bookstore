@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav id="page-nav" th:fragment="nav">
+    <div class="container" id="nav-row">
+        <a th:href="@{/}" id="logo" style="">Księgarnia.pl</a>
+        <a th:href="@{/cart}" class="nav-item">Koszyk<br></a>
+        <a th:href="@{/admin}" class="nav-item">Admin<br></a>
+    </div>
+    <div class="container">
+        <form th:action="@{/search}" method="get" class="search-bar">
+            <input type="text" name="keyword" placeholder="Wyszukaj produkt">
+            <button type="submit">Szukaj</button>
+        </form>
+    </div>
+
+</nav>
+</body>
+</html>

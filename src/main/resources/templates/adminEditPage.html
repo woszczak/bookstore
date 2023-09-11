@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: template(~{:: #edit-content})}">
+
+<section id="edit-content">
+    <div class="container">
+
+        <table style="width: 100%">
+            <tr th:each="product : ${products}">
+                <td>
+                    <h3 th:text="${product.name}"></h3>
+                </td>
+                <td style="text-align: right" class="product-detail">
+                    <h3 th:text="|${product.price}zł|"></h3>
+                    <div class="edit-btn"><a th:href="@{/admin/edit/{product-id}(product-id=${product.id})}"
+                                             class="btn">Edytuj</a>
+                    </div>
+                    <form th:action="@{/admin/delete/{product-id}(product-id=${product.id})}" method="post">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button type="submit" class="btn-danger">Usuń</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+</html>

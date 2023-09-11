@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: template(~{:: #cart-content})}">
+<section id="cart-content">
+
+    <div class="container">
+
+        <h1>Twój koszyk:</h1>
+        <table class="table" th:href="@{/cart}">
+            <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Cena</th>
+                <th>Ilość</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cartItems}" >
+                <td th:text="${item.productModel.name}">
+                </td>
+
+                <td th:text="${item.productModel.price}"></td>
+                <td th:text="${item.quantity}"></td>
+
+                <td>
+                    <form th:action="@{/cart/remove/{cartItemId}(cartItemId=${item.id})}" method="post">
+                        <input type="hidden" name="cartItemId" th:value="${item.id}"/>
+                        <button class="btn-danger" type="submit">Usuń</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="total">
+            <p> Suma: <span th:text="${cart.totalPrice}"></span></p>
+        </div>
+
+        <div class="actions">
+            <a th:href="@{/}" class="btn">Kontynuuj zakupy</a>
+            <form th:action="@{/cart/submit}" method="post">
+                <input type="hidden" name="cartItemId" th:value="${cart.id}"/>
+                <button  class="btn-add" type="submit">Zamów</button>
+            </form>
+        </div>
+    </div>
+</section>
+</html>

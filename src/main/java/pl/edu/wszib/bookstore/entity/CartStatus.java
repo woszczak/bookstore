@@ -1,4 +1,4 @@
-package pl.edu.wszib.bookstore.model;
+package pl.edu.wszib.bookstore.entity;
 
 public enum CartStatus {
 

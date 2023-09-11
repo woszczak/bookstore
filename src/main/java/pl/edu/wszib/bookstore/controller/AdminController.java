@@ -1,18 +1,18 @@
 package pl.edu.wszib.bookstore.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.wszib.bookstore.dto.ProductDTO;
+import pl.edu.wszib.bookstore.model.CategoryModel;
+import pl.edu.wszib.bookstore.model.ProductModel;
 import pl.edu.wszib.bookstore.mapper.ProductMapper;
+
 import pl.edu.wszib.bookstore.service.CategoryService;
 import pl.edu.wszib.bookstore.service.ProductService;
 
-import java.io.IOException;
-import java.math.BigDecimal;
+import java.util.List;
 
-
-@RestController
+@Controller
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -26,31 +26,125 @@ public class AdminController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("admin/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ProductDTO addProduct(@RequestBody ProductDTO productDTO) throws IOException {
+    @GetMapping("")
+    public String getAllProducts(Model model) {
+        List<ProductModel> products = productService.findAll();
+        model.addAttribute("products", products);
+        model.addAttribute("newProducts", new ProductModel());
+        return "adminPage";
+    }
 
-        ProductDTO savedProductDTO = productService.save(productDTO);
-        return savedProductDTO;
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute("newProduct") ProductModel productModel, Model model) {
+        productService.add(productModel);
+        model.addAttribute("products", productService.findAll());
+        model.addAttribute("newProduct", new ProductModel());
+        return "redirect:/admin";
     }
 
 
-    @PutMapping("admin/edit/{id}")
-    public ResponseEntity<ProductDTO> editProduct(@PathVariable("id") Long id, @RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("price") BigDecimal price, @RequestParam("categoryName") String categoryName, @RequestParam("bestseller") Boolean bestseller, @RequestParam("quantity") Integer quantity) throws IOException {
-        ProductDTO updatedProductDTO = productService.edit(id, name, description, price, categoryName, bestseller, quantity);
+    @GetMapping("/add")
+    public String showAddProductForm(Model model) {
+        model.addAttribute("categories", categoryService.list());
+        model.addAttribute("products", productService.findAll());
+        model.addAttribute("newProduct", new ProductModel());
+        return "adminAddPage";
+    }
 
-        if (updatedProductDTO != null) {
-            return ResponseEntity.ok(updatedProductDTO);
+    @GetMapping("/edit")
+    public String editProductsPage(Model model) {
+        List<ProductModel> products = productService.findAll();
+        model.addAttribute("products", products);
+        model.addAttribute("newProducts", new ProductModel());
+        return "adminEditPage";
+    }
+
+    @GetMapping("edit/{product-id}")
+    public String editProduct(@PathVariable("product-id") Long id, Model model) {
+        ProductModel product = productService.getById(id);
+        model.addAttribute("product", product);
+
+        List<CategoryModel> categories = categoryService.list();
+        model.addAttribute("categories", categories);
+        return "adminEditFormPage";
+    }
+
+
+    @PutMapping("/edit/{product-id}")
+    public String editProduct(
+            @PathVariable("product-id") Long id,
+            @ModelAttribute("updatedProduct") ProductModel updatedProduct) {
+        ProductModel existingProduct = productService.getById(id);
+
+        if (existingProduct != null) {
+            existingProduct.setName(updatedProduct.getName());
+            existingProduct.setDescription(updatedProduct.getDescription());
+            existingProduct.setPrice(updatedProduct.getPrice());
+            existingProduct.setCategory(updatedProduct.getCategory());
+            existingProduct.setBestseller(updatedProduct.isBestseller());
+            existingProduct.setQuantity(updatedProduct.getQuantity());
+            productService.edit(id, updatedProduct);
+            return "redirect:/admin/edit";
         } else {
-            return ResponseEntity.notFound().build();
+            return "redirect:/admin";
         }
     }
 
-
-    @DeleteMapping("admin/delete/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProduct(@PathVariable("id") Long productId) {
+    @DeleteMapping("/delete/{product-id}")
+    public String deleteProduct(@PathVariable("product-id") Long productId, Model model) {
         productService.delete(productId);
+        return "redirect:/admin/edit";
     }
 
+//    =========zarzadzanie kategoriami===================
+    @PostMapping("/addCategory")
+    public String addCategory(@ModelAttribute("newCategory") CategoryModel categoryModel, Model model) {
+        categoryService.addCategory(categoryModel);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/addCategory")
+    public String showAddCategoryForm(Model model) {
+        model.addAttribute("categories", categoryService.list());
+        model.addAttribute("newCategory", new CategoryModel());
+        return "adminAddCategoryPage";
+    }
+
+    @GetMapping("/editCategory")
+    public String editCategoryPage(Model model) {
+        List<CategoryModel> categories = categoryService.list();
+        model.addAttribute("categories", categories);
+        model.addAttribute("newCategories", new CategoryModel());
+        return "adminEditCategoryPage";
+    }
+
+    @GetMapping("editCategory/{category-id}")
+    public String editCategory(@PathVariable("category-id") Long id, Model model) {
+        CategoryModel categoryModel = categoryService.get(id);
+        model.addAttribute("category", categoryModel);
+        return "adminEditCategoryFormPage";
+    }
+
+    @PutMapping("/editCategory/{category-id}")
+    public String editCategory(
+            @PathVariable("category-id") Long id,
+            @ModelAttribute("updatedCategory") CategoryModel updatedCategoryModel) {
+        CategoryModel existingCategoryModel = categoryService.get(id);
+
+        if (existingCategoryModel != null) {
+
+            existingCategoryModel.setName(updatedCategoryModel.getName());
+            categoryService.editCategory(id, updatedCategoryModel);
+
+            return "redirect:/admin/editCategory";
+        } else {
+            return "redirect:/admin/editCategory";
+        }
+    }
+
+    @DeleteMapping("/deleteCategory/{category-id}")
+    public String deleteCategory(@PathVariable("category-id") Long categoryId) {
+        categoryService.deleteCategory(categoryId);
+        return "redirect:/admin/editCategory";
+    }
 }

@@ -1,72 +1,95 @@
 package pl.edu.wszib.bookstore.controller;
 
-
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.wszib.bookstore.dto.ProductDTO;
-import pl.edu.wszib.bookstore.mapper.ProductMapper;
+import pl.edu.wszib.bookstore.entity.Cart;
+import pl.edu.wszib.bookstore.model.CategoryModel;
+import pl.edu.wszib.bookstore.model.ProductModel;
 import pl.edu.wszib.bookstore.service.CategoryService;
 import pl.edu.wszib.bookstore.service.ProductService;
-import java.math.BigDecimal;
+
 import java.util.List;
 
-@RestController
-@RequestMapping("")
+@Controller
 public class ProductController {
 
     private ProductService productService;
-    private ProductMapper productMapper;
     private CategoryService categoryService;
 
-    public ProductController(ProductService productService, ProductMapper productMapper, CategoryService categoryService) {
+    public ProductController(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
-        this.productMapper = productMapper;
         this.categoryService = categoryService;
     }
 
-    @GetMapping(value = {"/products"})
-    public List<ProductDTO> getAllProducts() {
-        return productService.getAllProducts();
+    @GetMapping("/")
+    public String getAllProducts(Model model) {
+        Cart cart = new Cart();
+        cart.setId((long) 1);
+        model.addAttribute("cart", cart);
+        List<ProductModel> products = productService.findAll();
+        model.addAttribute("products", products);
+
+        List<CategoryModel> categories = categoryService.list();
+        model.addAttribute("categories", categories);
+        return "homePage";
     }
 
-    @GetMapping("products/{id}")
-    public ProductDTO getProduct(@PathVariable("id") Long id) {
-        return productService.getProduct(id);
+    @GetMapping("/{product-id}")
+    public String getProduct(@PathVariable("product-id") Long id, Model model) {
+        ProductModel product = productService.getById(id);
+        model.addAttribute("product", product);
+        return "productPage";
+    }
+
+    @GetMapping("/category/{categoryName}")
+    public String getProductsByCategory(@PathVariable("categoryName") String categoryName, Model model) {
+        List<ProductModel> products = productService.getProductsByCategory(categoryName);
+        model.addAttribute("products", products);
+
+        List<CategoryModel> categories = categoryService.list();
+        model.addAttribute("categories", categories);
+        return "homePage";
+    }
+
+    @GetMapping("/search")
+    public String searchProductByName(@RequestParam String keyword, Model model) {
+        List<ProductModel> products = productService.searchProductByName(keyword);
+        model.addAttribute("products", products);
+
+        List<CategoryModel> categories = categoryService.list();
+        model.addAttribute("categories", categories);
+        return "homePage";
+    }
+
+    @GetMapping("/bestsellers")
+    public String getBestsellers(Model model) {
+        List<ProductModel> bestsellers = productService.getBestsellers();
+        model.addAttribute("products", bestsellers);
+
+        List<CategoryModel> categories = categoryService.list();
+        model.addAttribute("categories", categories);
+        return "homePage";
     }
 
 
-    @GetMapping("/category/{categoryName}/products")
+    @GetMapping("/sortedByPriceAsc")
+    public String getAllProductsSortedByPriceAsc(Model model) {
+        List<ProductModel> products = productService.getAllProductsSortedByPriceAsc();
+        model.addAttribute("products", products);
 
-    public List<ProductDTO> getProductsByCategory(@PathVariable("categoryName") String categoryName) {
-        return productService.getProductsByCategory(categoryName);
+        List<CategoryModel> categories = categoryService.list();
+        model.addAttribute("categories", categories);
+        return "homePage";
     }
 
-    @GetMapping("/products/search")
-    public ResponseEntity<List<ProductDTO>> searchProductByName(@RequestParam String keyword) {
-        List<ProductDTO> productDTOS = productService.searchProductByName(keyword);
+    @GetMapping("/sortedByPriceDesc")
+    public String getAllProductsSortedByPriceDesc(Model model) {
+        List<ProductModel> products = productService.getAllProductsSortedByPriceDesc();
+        model.addAttribute("products", products);
 
-        return ResponseEntity.ok(productDTOS);
-    }
-
-    @GetMapping("products/bestsellers")
-    public List<ProductDTO> getBestsellers() {
-        return productService.getBestsellers();
-    }
-
-    @GetMapping("/products/searchByPrice")
-    public ResponseEntity<List<ProductDTO>> searchProductsByPriceRange(
-            @RequestParam BigDecimal minPrice, @RequestParam BigDecimal maxPrice) {
-        List<ProductDTO> productDTOS = productService.searchProductsByPriceRange(minPrice, maxPrice);
-        return ResponseEntity.ok(productDTOS);
-    }
-
-    @GetMapping("/products/sortedByPriceAsc")
-    public List<ProductDTO> getAllProductsSortedByPriceAsc() {
-        return productService.getAllProductsSortedByPriceAsc();
-    }
-
-    @GetMapping("/products/sortedByPriceDesc")
-    public List<ProductDTO> getAllProductsSortedByPriceDesc() {
-        return productService.getAllProductsSortedByPriceDesc();
+        List<CategoryModel> categories = categoryService.list();
+        model.addAttribute("categories", categories);
+        return "homePage";
     }
 }

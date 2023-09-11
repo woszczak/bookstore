@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: template(~{:: #add-product-content})}">
+
+<section id="add-product-content">
+    <div class="container">
+
+        <h1>Dodaj produkt</h1>
+
+        <form method="post" th:object="${newProduct}">
+            <div class="form-group">
+                <label>Nazwa:</label>
+                <input th:field="*{name}" type="text" placeholder="Podaj nazwę..." class="input" required></div>
+            <div class="form-group">
+                <label>Ilość:</label>
+                <input th:field="*{quantity}" type="number" placeholder="Podaj ilość..." class="input" required></div>
+            <div class="form-group">
+                <label>Cena:</label>
+
+                <input th:field="*{price}" type="number" step="0.01" placeholder="Podaj cenę" class="input" required>
+            </div>
+
+            <div class="form-group">
+                <label>Kategoria:</label>
+                <select th:field="*{category.id}" class="input">
+                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Opis:</label>
+
+                <textarea th:field="*{description}" placeholder="Dodaj opis..." class="input" required></textarea></div>
+            <div class="form-check"><input th:field="*{bestseller}" type="checkbox" class="input"> Bestseller</div>
+            <div class="form-group">
+                <button class="btn">Dodaj</button>
+            </div>
+        </form>
+
+    </div>
+</section>
+</html>
+

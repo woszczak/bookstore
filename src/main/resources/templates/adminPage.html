@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: template(~{:: #admin-content})}">
+
+<section id="admin-content">
+    <div class="container">
+
+        <div class="admin-actions">
+        <a th:href="@{/admin/add}" class="btn-add">Dodaj produkt</a>
+        <a th:href="@{/admin/edit}" class="btn">Edytuj produkt</a>
+        </div>
+
+        <div class="admin-actions">
+            <a th:href="@{/admin/addCategory}" class="btn-add">Dodaj kategorię</a>
+            <a th:href="@{/admin/editCategory}" class="btn">Edytuj kategorię</a>
+        </div>
+
+    </div>
+</section>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: template(~{:: #product-content})}">
+<section id="product-content">
+
+    <div class="container">
+
+
+        <div class="product-card">
+
+            <div class="product-card-desc">
+                <div><h1 th:text="${product.name}"></h1>
+                    <span th:if="${product.bestseller}" class="bestseller-label"><i
+                            class="fa-regular fa-star"> Bestseller</i></span>
+                </div>
+                <div>
+                    <h3>Cena: <span th:text="${product.price}"></span></h3>
+                    <h3>Kategoria: <span th:text="${product.category.name}"></span></h3>
+
+                    <div class="product-description"><h4>Opis: </h4>
+                        <p th:text="${product.description}"></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <form th:action="@{/cart/addToCart/{cartItemId}(cartItemId=${product.id})}" method="post"
+                  th:object="${cartItem}">
+                <input type="hidden" name="productId" th:value="${product.id}"/>
+                <input type="number" name="quantity" value="1" min="1"/>
+                <button class="btn-add" type="submit">Dodaj do koszyka</button>
+            </form>
+        </div>
+
+
+    </div>
+</section>
+</html>

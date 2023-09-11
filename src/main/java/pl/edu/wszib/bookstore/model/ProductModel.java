@@ -1,12 +1,10 @@
-package pl.edu.wszib.bookstore.dto;
+package pl.edu.wszib.bookstore.model;
 
-
-import org.springframework.web.multipart.MultipartFile;
-import pl.edu.wszib.bookstore.model.Category;
+import pl.edu.wszib.bookstore.entity.Category;
 
 import java.math.BigDecimal;
 
-public class ProductDTO {
+public class ProductModel {
     private Long id;
     private String name;
     private String description;
@@ -15,10 +13,10 @@ public class ProductDTO {
     private boolean bestseller;
     private Integer quantity;
 
-    public ProductDTO() {
+    public ProductModel() {
     }
 
-    public ProductDTO(Long id, String name, String description, BigDecimal price, Category category, boolean bestseller, Integer quantity) {
+    public ProductModel(Long id, String name, String description, BigDecimal price, Category category, boolean bestseller, Integer quantity) {
         this.id = id;
         this.name = name;
         this.description = description;
