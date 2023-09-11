@@ -71,7 +71,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.wszib.bookstore.entity.Cart;
-import pl.edu.wszib.bookstore.entity.CartItem;
 import pl.edu.wszib.bookstore.model.*;
 import pl.edu.wszib.bookstore.service.CartItemsService;
 import pl.edu.wszib.bookstore.service.CartService;
@@ -115,8 +114,7 @@ public class CartController {
         ProductModel productModel = productService.getById(productId);
 
         if (productModel == null || productModel.getQuantity() < quantity) {
-            return "redirect:/error";
-//            dfghjkjhsdsfghjgfdghjklhgf
+            return "redirect:/";
         }
         Cart cartModel = cartService.getOrCreate();
         model.addAttribute("cart", cartModel);
